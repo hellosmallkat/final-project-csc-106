@@ -1,0 +1,198 @@
+var currentColor = color(0,0,0);
+var currentScene = 0;
+
+var drawBitmoji = function(x,y,h) {    
+var drawBitmojiBody = function(){
+    noStroke();
+    //neck
+    fill(241, 194, 125);
+    rect(x+95*h/100,y+(h/100*34),h/100*16,h/100*19,h/100*18);
+    noStroke();
+    //rightear
+    fill(232, 173, 90);
+    ellipse(x+67*h/100, y+15*h/100, 30*h/100, 25*h/100);
+    //leftear
+    ellipse(x+134*h/100, y+15*h/100, h/100*30, h/100*25);
+    
+    fill(241, 194, 125);
+    ellipse(x+100*h/100,y,h/100*80,h/100*90); //head
+    //body
+    fill(51, 41, 41);
+    rect(x+77*h/100,y+70*h/100,h/100*61,h/100*30,h/100*18);
+    //scarf
+    fill(246, 232, 250);
+    stroke(0, 0, 0);
+    strokeWeight(1);
+    arc(x+117*h/100,y+80*h/100,40*h/100,44*h/100,-368,6);
+    arc(x+104*h/100,y+66*h/100,65*h/100,35*h/100,-270,13);
+    
+    fill(255, 255, 255);
+    text("LN",x+80*h/100,y+85*h/100,15*h/100,15*h/100);
+    
+};
+ 
+    
+var drawBitmojiHead = function(){
+    noStroke();
+    fill(122, 0, 0);
+    //hairleft
+    bezier(x+55*h/100, y+0*h/100, x+101*h/100, y+23*h/100, x+141*h/100, y-87*h/100, x+56*h/100, y-1*h/100);
+    arc(x+94*h/100,y-9*h/100,70*h/100,72*h/100,525,665);
+    //hairright
+    bezier(x+111*h/100, y-31*h/100, x+64*h/100, y-6*h/100, x+206*h/100, y+38*h/100, x+105*h/100, y-38*h/100);
+    arc(x+111*h/100,y-5*h/100,56*h/100,73*h/100,587,724);
+    //glasses
+    stroke(2, 64, 1);
+    strokeWeight(3);
+    fill(241, 194, 125);
+    ellipse(x+117*h/100,y+11*h/100,27*h/100,22*h/100);
+    ellipse(x+82*h/100,y+11*h/100,27*h/100,22*h/100);
+    line(x+97*h/100,y+11*h/100,x+102*h/100,y+11*h/100);
+    //eyes
+    stroke(0, 0, 0);
+    strokeWeight(1/2);
+    fill(255, 255, 255);
+    ellipse(x+117*h/100,y+10*h/100,12*h/100,12*h/100);//left
+    ellipse(x+82*h/100,y+11*h/100,13*h/100,12*h/100);//right
+    fill(0, 0, 0);
+    ellipse(x+116*h/100,y+11*h/100,6*h/100,8*h/100);//right
+    ellipse(x+82*h/100,y+12*h/100,6*h/100,8*h/100);//left
+    //lips
+    stroke(240, 130, 130);
+    strokeWeight(3);
+    fill(241, 194, 125);
+    arc(x+103*h/100,y+28*h/100,19*h/100,13*h/100,0,139);
+    //earings
+    stroke(245, 212, 49);
+    line(x+62*h/100,y+20*h/100,x+62*h/100,y+29*h/100);
+    line(x+137*h/100,y+20*h/100,x+137*h/100,y+29*h/100);
+    ellipse(x+62*h/100,y+33*h/100,5*h/100,5*h/100);
+    ellipse(x+137*h/100,y+33*h/100,5*h/100,5*h/100);
+ 
+};
+    fill(199, 140, 91);
+    rect(x+21*h/100, y+-62*h/100,167,204,10);
+    drawBitmojiBody();
+    drawBitmojiHead(); 
+    text("Lily",x+85*h/100, y+110*h/100, 53,40);
+    noStroke();
+};
+ 
+//Paste in Khan Button class, including mouseClicked function.
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+    this.color = config.color || color(255, 248, 222);
+};
+
+Button.prototype.draw = function() {
+    noStroke();
+    fill(this.color);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(16);
+    textAlign(LEFT, TOP);
+    var f = createFont("monospace");
+    textFont(f);
+    text(this.label, this.x+10, this.y+this.height/3.5);
+};
+
+Button.prototype.changeColor = function(newColor){};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+/* Create start button where the button's onClick changes the scene, set the background for the new scene,and put the appropriate letter on the screen in big font. */
+
+var btn1 = new Button({
+    x: 50,
+    y: 129,
+    width: 150,
+    label: "Lily Nguyen",
+    onClick: function() {
+        currentScene = 1;
+    }
+});
+
+var btn2 = new Button({
+    x: 50,
+    y: 245.8,
+    width: 150,
+    label: "Kat Toolan",
+    onClick: function() {
+        currentScene = 2;
+    }
+    
+});
+
+//splash screen
+var splash = function()
+{
+    background(255, 171, 107);
+    //drawBitmoji(193.5,173,100);
+    fill(255, 187, 0);
+    rect(0,349,400,100);
+    fill(0, 0, 0);
+    textSize(28);
+    text("CSC 106 Final Project", 30,40);
+    //instruction
+    fill(184, 134, 48);
+    textSize(10);
+    //text("To start, click the button with the initial you want to trace.",10,355);
+   // text("Then use your mouse to Trace! Try to stay in the lines :)",10,369);
+    //text("Have fun!",10,383);
+    //button
+    image(getImage("cute/Selector"), 255,100);
+    btn1.draw();
+    btn2.draw();
+    
+};
+
+var scene1 = function() 
+{
+    currentScene = 1;
+    background(134, 145, 247);
+    textSize(300);
+    fill(255, 255, 255);
+    text("L",80,25);
+  
+};
+
+var scene2 = function() 
+{
+    currentScene = 2;
+    background(250, 110, 248);
+    textSize(243);
+
+};
+
+
+mouseClicked = function() {
+if (currentScene === 0) 
+    {
+        btn1.handleMouseClick();
+        btn2.handleMouseClick();
+    }
+
+}; 
+draw = function(){
+    if (currentScene === 0) 
+    {
+        splash();
+    }
+
+};
